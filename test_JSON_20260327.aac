@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>LABEL 발행 JSON POST 예제</title>
+</head>
+
+<body>
+
+    <button onclick="sendJsonDataWaferY()">lot투입용 부착라벨 - WAFER CHECK = Y</button>
+    <button onclick="sendJsonDataWaferN()">lot투입용 부착라벨 - WAFER CHECK = N</button>
+    <button onclick="sendJsonDataEquip()">자재 입출고용 부착라벨 </button>
+    <button onclick="sendJsonDataIncludeHeader()">cors 관련 Header 테스트</button>
+    <button onclick="sendJsonDataWaferBox()">설비관리용WaferBox부착라벨</button>
+
+
+    <script>
+        function sendJsonDataWaferY() {
+            const url = 'http://127.0.0.1:8082/type_lot'; // 실제 API 엔드포인트 주소
+            const data = {
+                qr_data: 'testLot-001',
+                lot_id: 'testLot-001',
+                wafer_check: 'Y',
+                m_info: '8inch/silicon/6매',
+                user: 'user001',
+                fab_in: '2025-12-25',
+                wafer_list: 'testWafer#001,testWafer#002,testWafer#003,testWafer#004'
+            };
+
+            fetch(url, {
+                method: 'POST', // HTTP 메소드
+                headers: {
+                    'Content-Type': 'application/json', // 데이터 타입이 JSON임을 알림
+                },
+                body: JSON.stringify(data) // JavaScript 객체를 JSON 문자열로 변환 [1, 2]
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json(); // 서버 응답이 JSON이면 파싱
+                })
+                .then(data => {
+                    console.log('성공:', data);
+                    alert('데이터 전송 성공!');
+                })
+                .catch(error => {
+                    console.error('오류:', error);
+                    alert('데이터 전송 실패!');
+                });
+        }
+
+        function sendJsonDataWaferN() {
+            const url = 'http://127.0.0.1:8082/type_lot'; // 실제 API 엔드포인트 주소
+            const data = {
+                qr_data: 'TestLot-002',
+                lot_id: 'TestLot-002',
+                wafer_check: 'N',
+                m_info: '6inch/silicon/3매',
+                user: 'user002',
+                fab_in: '2025-12-25',
+                wafer_list: 'testWafer#001,testWafer#002,testWafer#003,testWafer#004'
+            };
+
+            fetch(url, {
+                method: 'POST', // HTTP 메소드
+                headers: {
+                    'Content-Type': 'application/json', // 데이터 타입이 JSON임을 알림 [1]
+                },
+                body: JSON.stringify(data) // JavaScript 객체를 JSON 문자열로 변환 [1, 2]
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json(); // 서버 응답이 JSON이면 파싱
+                })
+                .then(data => {
+                    console.log('성공:', data);
+                    alert('데이터 전송 성공!');
+                })
+                .catch(error => {
+                    console.error('오류:', error);
+                    alert('데이터 전송 실패!');
+                });
+        }
+
+        function sendJsonDataEquip() {
+            const url = 'http://127.0.0.1:8082/type_inout'; // 실제 API 엔드포인트 주소
+            const data = {
+                machine: 'machine001',
+                m_name: 'machine name is machine001',
+                spec: 'test spec macine001',
+                maker: '****',
+                indt: '2025-12-25',
+                qr_data: 'qr_sample',
+            };
+
+            fetch(url, {
+                method: 'POST', // HTTP 메소드
+                headers: {
+                    'Content-Type': 'application/json', // 데이터 타입이 JSON임을 알림 [1]
+                },
+                body: JSON.stringify(data) // JavaScript 객체를 JSON 문자열로 변환 [1, 2]
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json(); // 서버 응답이 JSON이면 파싱
+                })
+                .then(data => {
+                    console.log('성공:', data);
+                    alert('데이터 전송 성공!');
+                })
+                .catch(error => {
+                    console.error('오류:', error);
+                    alert('데이터 전송 실패!');
+                });
+        }
+
+        function sendJsonDataIncludeHeader(){
+            const url = 'http://127.0.0.1:8082/type_inout'; // 실제 API 엔드포인트 주소
+            const data = {
+                machine: 'machine001',
+                m_name: 'machine name is machine001',
+                spec: 'test spec macine001',
+                maker: '****',
+                indt: '2025-12-25',
+                qr_data: 'qr_sample',
+            };
+
+            fetch(url, {
+                method: 'POST', // HTTP 메소드
+                headers: {
+                    'Content-Type': 'application/json', // 데이터 타입이 JSON임을 알림 [1]
+                    'x-auth-token' : 'x-auth-token',
+                    'page-id' : 'page-id',
+                    'menu-id' : 'menu-id',
+                    'original-user-id' : 'original-user-id',
+                    'last-access-time' : 'last-access-time',
+                    'client-type' : 'client-type',
+                    'factorycode' : 'factorycode',
+                    'Authorization' : 'Authorization',
+                    'funccode' : 'funcode',
+                    'funcpath' : 'funcpath'
+                },
+                body: JSON.stringify(data) // JavaScript 객체를 JSON 문자열로 변환 [1, 2]
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json(); // 서버 응답이 JSON이면 파싱
+                })
+                .then(data => {
+                    console.log('성공:', data);
+                    alert('데이터 전송 성공!');
+                })
+                .catch(error => {
+                    console.error('오류:', error);
+                    alert('데이터 전송 실패!');
+                });
+        }
+                
+
+        function sendJsonDataWaferBox() {
+            const url = 'http://127.0.0.1:8082/type_wafer'; // 실제 API 엔드포인트 주소
+            const data = {
+                wafer_type: 'Glass Wafer 999um 8” - PRIME',
+                box_id: 'TEST_260304_11',
+                indt: '2025-12-25',
+                po_no: '5247194540/525737957',
+                etc: 'etc',
+                qr_data: 'TEST_260304_11',
+            };
+
+            fetch(url, {
+                method: 'POST', // HTTP 메소드
+                headers: {
+                    'Content-Type': 'application/json', // 데이터 타입이 JSON임을 알림 [1]
+                },
+                body: JSON.stringify(data) // JavaScript 객체를 JSON 문자열로 변환 [1, 2]
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json(); // 서버 응답이 JSON이면 파싱
+                })
+                .then(data => {
+                    console.log('성공:', data);
+                    alert('데이터 전송 성공!');
+                })
+                .catch(error => {
+                    console.error('오류:', error);
+                    alert('데이터 전송 실패!');
+                });
+        }                
+    </script>
+
+</body>
+
+</html>
